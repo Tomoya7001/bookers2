@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @user.user_id = current_user.id
     @user.save
-    redirect_to users_path(@user.id)
+    redirect_to users_path(@user.id), notice: 'You have created book successfully.'
   end
 
   def index
@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     @user.update(user_params)
-    redirect_to user_path(@user.id)
+    redirect_to user_path(@user.id), notice: 'You have updated user successfully.'
   end
 
   def show
