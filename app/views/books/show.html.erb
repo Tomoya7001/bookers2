@@ -1,0 +1,74 @@
+<p id="notice"><%= notice %></p>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4">
+      <h2>User info</h2>
+      <%= image_tag @user.get_profile_image(63,63) %>
+      <table class="table">
+        <tbody>
+          <tr></tr>
+          <tr>
+            <th>name</th>
+            <th><%= @user.name %></th>
+          </tr>
+          <tr>
+            <th>introduction</th>
+            <th><%= @user.introduction %></th>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row">
+        <%= link_to edit_user_path(@user.id), class: "btn btn-outline-secondary btn-block" do %>
+          <i class="fas fa-user-cog" ></i>
+        <% end %>
+      </div>
+
+      <h1>New book</h1>
+      <%= form_with model: @book do |f| %>
+        <h4>Title</h4>
+          <%= f.text_field :title %>
+        <h4>Opinion</h4></h4>
+          <%= f.text_area :body %>
+        <br>
+          <%= f.submit 'Create Book' %>
+      <% end %>
+    </div>
+    <div class="col-lg-8">
+
+    <table class="table table-striped" >
+      <thead>
+        <tr>
+          <th colspan="2"></th>
+          <th>Title</th>
+          <th>Opinion</th>
+          <th colspan="4"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <h2>Book detail</h2>
+        <tr>
+          <th><%= image_tag @user.get_profile_image(40,40) %></th>
+          <th><span><%= link_to @book.user.name, user_path(@user.id) %></span></th>
+          <th><%= link_to @book.title, book_path(@book.id) %></th>
+          <th><%= @book.body %></th>
+          <th><% if @book.user == current_user %></th>
+          <th><%= link_to "Edit", edit_book_path(@book.id) %></th>
+          <th><%= link_to "Destroy", book_path(@book), method: :delete, "data-confirm" => "本当に削除しますか？" %></th>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="mx-auto">
+        <p>CopyRight Infratop.inc</p>
+      </div>
+    </div>
+  </div>
+</footer>

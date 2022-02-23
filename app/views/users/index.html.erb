@@ -1,0 +1,77 @@
+<p id="notice"><%= notice %></p>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4">
+      <h2>User info</h2>
+      <%= image_tag @user.get_profile_image(63,63) %>
+      <table class="table">
+        <tbody>
+          <tr></tr>
+          <tr>
+            <th>name</th>
+            <th><%= @user.name %></th>
+          </tr>
+          <tr>
+            <th>introduction</th>
+            <th><%= @user.introduction %></th>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row">
+        <%= link_to edit_user_path(@user.id), class: "btn btn-outline-secondary btn-block" do %>
+          <i class="fas fa-user-cog" ></i>
+        <% end %>
+      </div>
+
+      <h1>New book</h1>
+      <%= form_with model: @book do |f| %>
+        <h4>Title</h4>
+          <%= f.text_field :title %>
+        <h4>Opinion</h4></h4>
+          <%= f.text_area :body %>
+        <br>
+          <%= f.submit 'Create Book' %>
+      <% end %>
+    </div>
+    <div class="col-lg-8">
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th colspan="1"></th>
+          <th>Title</th>
+          <th>Opinion</th>
+          <th colspan="4"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <h1>Users</h1>
+        <% @users.each do |user| %>
+          <tr>
+            <th>
+              <% if user.profile_image.attached? %>
+                <%= image_tag user.profile_image, size: "40x40" %>
+              <% else %>
+                <%= image_tag 'no_image', size: "40x40" %>
+              <% end %>
+            </th>
+            <th><%= user.name %></th>
+            <th><%= link_to "Show", user_path(user.id) %></th>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="mx-auto">
+        <p>CopyRight Infratop.inc</p>
+      </div>
+    </div>
+  </div>
+</footer>

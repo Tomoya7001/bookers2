@@ -1,0 +1,19 @@
+<h1>User info</h1>
+<%= form_with model: @user, url:'/users' do |f| %>
+
+  <p>画像</p>
+  <% if user.image.attached? %>
+    <%= image_tag user.image, size: "100x100" %>
+  <% else %>
+    <%= image_tag 'no_image', size: "100x100" %>
+  <% end %>
+
+  <p>name</p>
+  <span>
+  <%= link_to user.name, user_path(user.id) %>
+  </span>
+  <P>introduction</P>
+  <%= link_to user.introduction, user_path(user.id) %>
+
+  <%= f.submit 'Update User' %>
+<% end %>
