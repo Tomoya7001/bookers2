@@ -2,8 +2,16 @@
   <p id="notice"></p>
   <div class="container">
     <div class="row">
-      <div class="col-sm col-md-8 col-lg-5 px-5 px-sm 0">
-        <h2>Editing book</h2>
+      <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm 0 mx-auto">
+        <h2>Editing Book</h2>
+        <% if @book.errors.any? %>
+          <%= @book.errors.count %>errors prohibited this obj from being saved:
+          <ul>
+            <% @book.errors.full_messages.each do |massage| %>
+            <li><%= massage %></li>
+            <% end %>
+          </ul>
+        <% end %>
         <%= form_with model: @book do |f| %>
 
           <div class="field">
@@ -16,12 +24,12 @@
             <%= f.text_area :body %>
           </div>
 
-          <div class="actions">
-            <%= f.submit 'Update Book' %>
+          <div>
+            <%= f.submit "Update Book", class: "btn btn-success" %>
           </div>
 
-          <%= link_to "Show", user_path(current_user) %>
-          " | "
+          <%= link_to "Show", book_path(@book.id) %>
+           |
           <%= link_to "Back", "/books" %>
         <% end %>
       </div>

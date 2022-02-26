@@ -2,7 +2,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-lg-4">
+    <div class="col-md-3">
       <h2>User info</h2>
       <%= image_tag @user.get_profile_image(63,63) %>
       <table class="table">
@@ -25,7 +25,7 @@
       </div>
 
       <h1>New book</h1>
-      <%= form_with model: @book do |f| %>
+      <%= form_with model: @book_new do |f| %>
         <h4>Title</h4>
           <%= f.text_field :title %>
         <h4>Opinion</h4></h4>
@@ -34,27 +34,31 @@
           <%= f.submit 'Create Book' %>
       <% end %>
     </div>
-    <div class="col-lg-8">
-
-    <table class="table table-striped" >
-      <thead>
-        <tr>
-          <th colspan="2"></th>
-          <th>Title</th>
-          <th>Opinion</th>
-          <th colspan="4"></th>
-        </tr>
-      </thead>
+    <div class="col-md-8 offset-md-1">
+      <h2>Book detail</h2>
+    <table class="table">
       <tbody>
-        <h2>Book detail</h2>
         <tr>
-          <th><%= image_tag @user.get_profile_image(40,40) %></th>
-          <th><span><%= link_to @book.user.name, user_path(@user.id) %></span></th>
+          <th>
+            <%= link_to user_path(@user.id) do %>
+              <%= image_tag @user.get_profile_image(40,40) %>
+            <% end %>
+            <br>
+            <%= link_to @book.user.name, user_path(@user.id) %>
+          </th>
           <th><%= link_to @book.title, book_path(@book.id) %></th>
           <th><%= @book.body %></th>
           <th><% if @book.user == current_user %></th>
-          <th><%= link_to "Edit", edit_book_path(@book.id) %></th>
-          <th><%= link_to "Destroy", book_path(@book), method: :delete, "data-confirm" => "本当に削除しますか？" %></th>
+          <th>
+            <%= link_to edit_book_path(@book.id), class: "btn-sm" do  %>
+              <i class="btn btn-success" >Edit</i>
+            <% end %>
+          </th>
+          <th>
+            <%= link_to book_path(@book), {class: "btn-sm", method: :delete, "data-confirm" => "本当に削除しますか？"} do %>
+              <i class="btn btn-danger">Destroy</i>
+            <% end %>
+          </th>
         </tr>
         <% end %>
       </tbody>

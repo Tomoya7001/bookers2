@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     @user.user_id = current_user.id
     @user.save
-    redirect_to users_path(@user.id), notice: 'You have created book successfully.'
+    redirect_to user_path(@user), notice: 'You have created book successfully.'
   end
 
   def index
@@ -19,12 +19,22 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+    if @user == current_user
+      render 'edit'
+    else
+      redirect_to user_path(current_user)
+    end
   end
 
   def update
     @user = User.find(params[:id])
     @user.update(user_params)
-    redirect_to user_path(@user.id), notice: 'You have updated user successfully.'
+    if @user.save
+      redirect_to user_path(@user.id), notice: 'You have updated user successfully.'
+    else
+      @users = User.all
+      render :edit, notice: 'Name is too short (minimum is 2 characters)'
+    end
   end
 
   def show
