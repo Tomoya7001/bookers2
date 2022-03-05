@@ -7,6 +7,8 @@ class Book < ApplicationRecord
   validates :body, length: { in: 1..200 }
 
   belongs_to :user
+  has_many :favorites, dependent: :destroy
+  has_many :book_comments, dependent: :destroy
 
 
 
@@ -16,6 +18,10 @@ class Book < ApplicationRecord
       profile_image.attach(io: File.open(file_path), filename: 'no_image.jpg', content_type: 'image/jpeg')
     end
     profile_image.variant(resize_to_limit: [width, height]).processed
+  end
+
+  def favorited_by?(user)
+    favorites.exists?(user_id: user.id)
   end
 
 end

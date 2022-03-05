@@ -1,7 +1,7 @@
-<% if @book.errors.any? %>
-  <%= @book.errors.count %>errors prohibited this obj from being saved:
+<% if @book_new.errors.any? %>
+  <%= @book_new.errors.count %>errors prohibited this obj from being saved:
   <ul>
-    <% @book.errors.full_messages.each do |massage| %>
+    <% @book_new.errors.full_messages.each do |massage| %>
     <li><%= massage %></li>
     <% end %>
   </ul>
@@ -35,7 +35,7 @@
       </div>
 
       <h1>New book</h1>
-      <%= form_with model: @book do |f| %>
+      <%= form_with model: @book_new do |f| %>
         <h4>Title</h4>
           <%= f.text_field :title %>
         <h4>Opinion</h4>
@@ -66,6 +66,24 @@
             </th>
             <th><span><%= link_to book.title, book_path(book.id) %></span></th>
             <th><%= book.body %></th>
+
+            <th>
+              <% if book.favorited_by?(current_user) %>
+
+                <%= link_to book_favorites_path(book), method: :delete do %>
+                  ♥<%= book.favorites.count %>
+                <% end %>
+
+              <% else %>
+
+                <%= link_to book_favorites_path(book), method: :post do %>
+                  ♡<%= book.favorites.count %>
+                <% end %>
+
+              <% end %>
+            </th>
+
+            <th><%= link_to "コメント数:#{book.book_comments.count}", book_path(book.id) %></th>
           </tr>
         <% end %>
       </tbody>
